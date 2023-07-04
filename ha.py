@@ -7,9 +7,6 @@ import matplotlib.pyplot as plt
 import matplotlib.figure as fig
 import plotly.graph_objects as go
 import plotly.express as px
-import seaborn as sns
-import sklearn as sk
-from sklearn import preprocessing
 from matplotlib import cm
 from pandas.core.apply import frame_apply
 from dash.dependencies import Input, Output
