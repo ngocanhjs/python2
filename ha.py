@@ -15,7 +15,7 @@ from pandas.core.apply import frame_apply
 from dash.dependencies import Input, Output
 import pandas as pd
 import plotly.express as px
-data = pd.read_csv('C:\data.csv')
+data = pd.read_csv('https://raw.githubusercontent.com/ngocanhjs/python2/main/data.csv')
 
 
 fig = px.box(data,x="MAIN_GENRE", y="SCORE",color = "MAIN_GENRE", title="The box chart demonstrates the distribution of range score of TV shows according to TV show genres")
@@ -23,7 +23,7 @@ med_score = data.groupby('MAIN_GENRE')['SCORE'].median().sort_values()
 sorted_genre = med_score.index.tolist()
 fig.update_layout(xaxis=dict(categoryorder='array', categoryarray=sorted_genre))
 
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__)
 server=app.server
 
 app.layout = dbc.Container(
