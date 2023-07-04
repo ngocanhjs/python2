@@ -12,7 +12,7 @@ from pandas.core.apply import frame_apply
 from dash.dependencies import Input, Output
 import pandas as pd
 import plotly.express as px
-data = pd.read_csv('https://raw.githubusercontent.com/ngocanhjs/lancuoi/main/data.csv') 
+data = pd.read_csv('https://raw.githubusercontent.com/ngocanhjs/python2/main/data.csv') 
 
 
 fig = px.box(data,x="MAIN_GENRE", y="SCORE",color = "MAIN_GENRE", title="The box chart demonstrates the distribution of range score of TV shows according to TV show genres")
