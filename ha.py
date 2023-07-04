@@ -1,7 +1,6 @@
 from dash import html
 from dash import dcc
 import dash
-import dash_bootstrap_components as dbc
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.figure as fig
