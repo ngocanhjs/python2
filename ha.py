@@ -80,7 +80,7 @@ fig_new_pie = px.pie(
 fig_new_pie.update_traces(textposition='inside', textinfo='percent+label', marker=dict(line=dict(color='white', width=1)))
 
 # Combine the two plots
-fig_combined = make_subplots(rows=1, cols=2)
+fig_combined = subplots(rows=1, cols=2)
 fig_combined.add_trace(fig_pie.data[0], row=1, col=1)
 fig_combined.add_trace(fig_new_pie.data[0], row=1, col=2)
 fig_combined.update_layout(height=600)
