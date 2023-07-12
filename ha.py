@@ -64,7 +64,7 @@ fig_pie.update_layout(height=500)
 
 # Create the pie chart
 genre_df = data['MAIN_GENRE'].value_counts().reset_index()
-genre_df = genre_df[country_df['MAIN_GENRE'] / country_df['MAIN_GENRE'].sum() > 0.01]
+genre_df = genre_df[country_df['MAIN_GENRE'] / genre_df['MAIN_GENRE'].sum() > 0.01]
 fig_pie_1 = px.pie(
     country_df, 
     values='MAIN_GENRE', 
