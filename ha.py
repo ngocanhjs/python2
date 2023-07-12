@@ -15,8 +15,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-from plotly.subplots 
-import make_subplots
+from plotly.subplots import make_subplots
 
 # Read the CSV data
 data = pd.read_csv('https://raw.githubusercontent.com/ngocanhjs/1031/main/data.csv')
