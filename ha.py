@@ -118,7 +118,8 @@ app.layout = dbc.Container([
 
       Input("pie-chart-link", "n_clicks"),
 
-      Input("scatter-plot-link", "n_clicks")],
+      Input("scatter-plot-link", "n_clicks"),
+     Input ("new-content-link", "n_clicks"0],
 
 )
 
