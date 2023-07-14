@@ -93,7 +93,7 @@ app.layout = dbc.Container([
                     dbc.NavLink("Box Chart", href="#", id="box-chart-link"),
                     dbc.NavLink("Pie Chart", href="#", id="pie-chart-link"),
                     dbc.NavLink("Scatter Plot", href="#", id="scatter-plot-link"),
-                    dbc.NavLink("New Content", href="#", id="new-content-link"),  # New content link
+                    dbc.NavLink("New Content", href="#", id="new-content-link"),  
                 ],
                 vertical=False,
                 pills=True,
@@ -202,7 +202,7 @@ def update_content(bar_chart_clicks, box_chart_clicks, pie_chart_clicks, scatter
 
         ])
 
- elif button_id == "new-content-link":  # Check if the clicked button is the "New Content" link
+ elif button_id == "new-content-link":  
     return html.Div([
         html.H2('New Content', style={'text-align': 'center', 'color': 'black'}),  # Heading for new content
         html.P("kakakakakakakkaak", style={'text-align': 'center', 'font-weight': 'bold', 'font-size': '20px'}),  # New content
