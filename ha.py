@@ -15,16 +15,11 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-from plotly.subplots import make_subplots
-
 # Read the CSV data
 data = pd.read_csv('https://raw.githubusercontent.com/ngocanhjs/1031/main/data.csv')
 
-
-
-
 # Create the bar chart
-df_bar = data['MAIN_PRODUCTION'].value_counts().nlargest(n=5, keep='all').sort_values(ascending=False)
+df_bar = data['MAIN_PRODUCTION'].value_counts().nlargest(n=10, keep='all').sort_values(ascending=False)
 trace_bar = go.Bar(
     y=df_bar.values,
     x=df_bar.index,
@@ -35,7 +30,7 @@ trace_bar = go.Bar(
 )
 data_bar = [trace_bar]
 layout_bar = go.Layout(
-    title='Top 5 countries with the most TV shows (1970-2020)',
+    title='Top 10 countries with the most TV shows (1970-2020)',
     xaxis=dict(title='Main Production'),
     yaxis=dict(title='Number of TV shows'),
     height=400
@@ -44,7 +39,10 @@ fig_bar = go.Figure(data=data_bar, layout=layout_bar)
 
 # Create the box chart
 fig_box = px.box(
-    data, x="MAIN_GENRE", y="SCORE", color="MAIN_GENRE",
+    data,
+    x="MAIN_GENRE",
+    y="SCORE",
+    color="MAIN_GENRE",
     title="The box chart demonstrates the distribution of range score of TV shows according to TV show genres",
     color_discrete_map={genre: color for genre, color in zip(data['MAIN_GENRE'].unique(), ['goldenrod', 'hotpink', 'chocolate', 'lawngreen', 'dodgerblue'])}
 )
@@ -56,7 +54,9 @@ fig_box.update_layout(xaxis=dict(categoryorder='array', categoryarray=sorted_gen
 country_df = data['MAIN_PRODUCTION'].value_counts().reset_index()
 country_df = country_df[country_df['MAIN_PRODUCTION'] / country_df['MAIN_PRODUCTION'].sum() > 0.01]
 fig_pie = px.pie(
-    country_df, values='MAIN_PRODUCTION', names='index',
+    country_df, 
+    values='MAIN_PRODUCTION', 
+    names='index', 
     color_discrete_sequence=['goldenrod', 'hotpink', 'chocolate', 'lawngreen', 'dodgerblue']
 )
 fig_pie.update_traces(textposition='inside', textinfo='percent+label', marker=dict(line=dict(color='white', width=1)))
@@ -72,26 +72,6 @@ fig_scatter = px.scatter(
     color_discrete_map={genre: color for genre, color in zip(data['MAIN_GENRE'].unique(), ['goldenrod', 'hotpink', 'chocolate', 'lawngreen', 'dodgerblue'])}
 )
 
-# Create the new pie chart
-genre_df = data['MAIN_GENRE'].value_counts().reset_index()
-genre_df = genre_df[genre_df['MAIN_GENRE'] / genre_df['MAIN_GENRE'].sum() > 0.01]
-fig_new_pie = px.pie(
-    genre_df, values='MAIN_GENRE', names='index',
-    color_discrete_sequence=px.colors.sequential.RdBu
-)
-fig_new_pie.update_traces(textposition='inside', textinfo='percent+label', marker=dict(line=dict(color='white', width=1)))
-
-# Create the combined chart
-fig_combined = make_subplots(rows=1, cols=2)
-
-fig_combined.add_trace(fig_bar.data[0], row=1, col=1)
-fig_combined.add_trace(fig_pie.data[0], row=1, col=2)
-fig_combined.add_trace(fig_new_pie.data[0], row=1, col=2)
-
-fig_combined.update_layout(height=600)
-
-# Show the combined chart
-fig_combined.show()
 # Create the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
@@ -100,6 +80,10 @@ app.layout = dbc.Container([
     dbc.Row([
         dbc.Col([
             html.H1('NETFLIX TV SHOW DATA VISUALIZATION', style={'text-align': 'center'}),
+            html.H6("This interactive web application includes a bar chart visualizing the top 5 countries with the highest Netflix TV show production, as well as a box chart displaying the distribution of scores within different genres. Users can interact with the slider and dropdown menu to explore the data.",
+                style={'text-align': 'center', 'color': 'lightblack', 'font-style': 'italic'}),
+            html.A('Click here for more information', href='https://www.netflix.com/',
+               style={'text-align': 'center', 'color': 'blue','font-style': 'italic','font-size': '14px'}),
             html.Hr(),
             # Sidebar
             dbc.Nav(
@@ -115,55 +99,101 @@ app.layout = dbc.Container([
         ], md=15),
         dbc.Col([
             html.Div(id="content"),
-        ], md=15)
+        ], md=13),
     ]),
 ], fluid=True)
 
 # Callbacks to update content based on sidebar click
+
 @app.callback(
+
     Output("content", "children"),
+
     [Input("bar-chart-link", "n_clicks"),
-    Input("box-chart-link", "n_clicks"),
-    Input("pie-chart-link", "n_clicks"),
-    Input("scatter-plot-link", "n_clicks")],
+
+      Input("box-chart-link", "n_clicks"),
+
+      Input("pie-chart-link", "n_clicks"),
+
+      Input("scatter-plot-link", "n_clicks")],
+
 )
+
 def update_content(bar_chart_clicks, box_chart_clicks, pie_chart_clicks, scatter_plot_clicks):
+
     ctx = dash.callback_context
+
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
+ 
+
     if button_id == "bar-chart-link":
+
         return html.Div([
-            html.H2('The Distribution of Main Genre', style={'text-align': 'center', 'color': 'black'}),
+
+            html.H2('Top TV shows producing countries', style={'text-align': 'center', 'color': 'black'}),
+            html.H6("The first analysis begins by finding the top 10 countries that produce the largest number of content titles.",style={'text-align': 'center', 'color': 'lightblack', 'font-style': 'italic'}),
+
             html.H5('THE BAR CHART'),
+
             html.P('Number of countries:'),
-            dcc.Slider(id='slider', min=1, max=5, step=1, value=5),
+
+            dcc.Slider(id='slider', min=1, max=10, step=1, value=10),
+
             dcc.Graph(id='plot-bar'),
+
         ])
+
+ 
 
     elif button_id == "box-chart-link":
+
         return html.Div([
+
             html.H2('The Distribution of Main Genre', style={'text-align': 'center', 'color': 'black'}),
-            html.H5('THE MAIN BOX CHART', style={'text-align': 'center'}),
-            dcc.Graph(id='plot-box', figure=fig_box, style={'height': 950}),
+
+            html.H5('THE MAIN BOX CHART'),
+
+            dcc.Graph(id='plot-box', figure=fig_box, style={'height': 750}),
+
         ])
+
+ 
 
     elif button_id == "pie-chart-link":
+
         return html.Div([
+
             html.H2('The Distribution of Main Genre', style={'text-align': 'center', 'color': 'black'}),
+
             html.H5('THE PIE CHART'),
-            dcc.Graph(id='plot-pie', figure=fig_combined),
+
+            dcc.Graph(id='plot-pie', figure=fig_pie),
+
         ])
 
+ 
+
     elif button_id == "scatter-plot-link":
+
         return html.Div([
+
             html.H2('The Distribution of Main Genre', style={'text-align': 'center', 'color': 'black'}),
-            html.H5('THE SCATTER PLOT', className='text-center'),
-            html.H6('Select genre that you want to see:', className='text-center'),
+
+            html.H5('THE SCATTER PLOT'),
+
+            html.H6('Select genre that you want to see:'),
+
             dcc.Dropdown(
+
                 id='dropdown',
+
                 options=[{"label": option, "value": option} for option in data["MAIN_GENRE"].unique()],
+
                 value="drama"
+
             ),
+
             dcc.Graph(id="plot-sub-box", figure=fig_scatter),
 
         ])
