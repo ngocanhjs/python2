@@ -202,11 +202,14 @@ def update_content(bar_chart_clicks, box_chart_clicks, pie_chart_clicks, scatter
 
         ])
 
- elif button_id == "new-content-link":  
-    return html.Div([
-        html.H2('New Content', style={'text-align': 'center', 'color': 'black'}),  # Heading for new content
-        html.P("kakakakakakakkaak", style={'text-align': 'center', 'font-weight': 'bold', 'font-size': '20px'}),  # New content
-    ])
+   elif button_id == "new-content-link":
+        # Check if the clicked button is the "New Content" link
+        return html.Div([
+            html.H2('New Content', style={'text-align': 'center', 'color': 'black'}),
+            # Heading for new content
+            html.P("kakakakakakakkaak", style={'text-align': 'center', 'font-weight': 'bold', 'font-size': '20px'}),
+            # New content
+        ])
 
 
     else:
