@@ -202,9 +202,10 @@ def update_content(bar_chart_clicks, box_chart_clicks, pie_chart_clicks, scatter
 
     else:
 
-        return html.Div([
+     return html.Div([
 
-            html.H2('The Distribution of Main Genre', style={'text-align': 'center', 'color': 'black'}),
+            html.H2('Top TV shows producing countries', style={'text-align': 'center', 'color': 'black'}),
+            html.H6("The first analysis begins by finding the top 10 countries that produce the largest number of content titles.",style={'text-align': 'center', 'color': 'lightblack', 'font-style': 'italic'}),
 
             html.H5('THE BAR CHART'),
 
@@ -215,7 +216,6 @@ def update_content(bar_chart_clicks, box_chart_clicks, pie_chart_clicks, scatter
             dcc.Graph(id='plot-bar'),
 
         ])
-
  
 
  
