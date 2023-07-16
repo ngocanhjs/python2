@@ -15,9 +15,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-
 # Read the CSV data
-data = pd.read_csv('https://raw.githubusercontent.com/ngocanhjs/1031/main/data.csv')
+data = pd.read_csv('https://raw.githubusercontent.com/ngocanhjs/python2/main/data.csv')
 
 # Create the bar chart
 df_bar = data['MAIN_PRODUCTION'].value_counts().nlargest(n=5, keep='all').sort_values(ascending=False)
@@ -55,9 +54,9 @@ fig_box.update_layout(xaxis=dict(categoryorder='array', categoryarray=sorted_gen
 country_df = data['MAIN_PRODUCTION'].value_counts().reset_index()
 country_df = country_df[country_df['MAIN_PRODUCTION'] / country_df['MAIN_PRODUCTION'].sum() > 0.01]
 fig_pie = px.pie(
-    country_df,
-    values='MAIN_PRODUCTION',
-    names='index',
+    country_df, 
+    values='MAIN_PRODUCTION', 
+    names='index', 
     color_discrete_sequence=['goldenrod', 'hotpink', 'chocolate', 'lawngreen', 'dodgerblue']
 )
 fig_pie.update_traces(textposition='inside', textinfo='percent+label', marker=dict(line=dict(color='white', width=1)))
@@ -82,9 +81,9 @@ app.layout = dbc.Container([
         dbc.Col([
             html.H1('NETFLIX TV SHOW DATA VISUALIZATION', style={'text-align': 'center'}),
             html.H6("This interactive web application includes a bar chart visualizing the top 5 countries with the highest Netflix TV show production, as well as a box chart displaying the distribution of scores within different genres. Users can interact with the slider and dropdown menu to explore the data.",
-                    style={'text-align': 'center', 'color': 'lightblack', 'font-style': 'italic'}),
+                style={'text-align': 'center', 'color': 'lightblack', 'font-style': 'italic'}),
             html.A('Click here for more information', href='https://www.netflix.com/',
-                   style={'text-align': 'center', 'color': 'blue', 'font-style': 'italic', 'font-size': '14px'}),
+               style={'text-align': 'center', 'color': 'blue','font-style': 'italic','font-size': '14px'}),
             html.Hr(),
             # Sidebar
             dbc.Nav(
@@ -93,7 +92,6 @@ app.layout = dbc.Container([
                     dbc.NavLink("Box Chart", href="#", id="box-chart-link"),
                     dbc.NavLink("Pie Chart", href="#", id="pie-chart-link"),
                     dbc.NavLink("Scatter Plot", href="#", id="scatter-plot-link"),
-                    dbc.NavLink("New Content", href="#", id="new-content-link"),  
                 ],
                 vertical=False,
                 pills=True,
@@ -106,7 +104,6 @@ app.layout = dbc.Container([
 ], fluid=True)
 
 # Callbacks to update content based on sidebar click
-# Callbacks to update content based on sidebar click
 
 @app.callback(
 
@@ -118,8 +115,7 @@ app.layout = dbc.Container([
 
       Input("pie-chart-link", "n_clicks"),
 
-      Input("scatter-plot-link", "n_clicks"),
-     Input ("new-content-link", "n_clicks")],
+      Input("scatter-plot-link", "n_clicks")],
 
 )
 
@@ -202,15 +198,7 @@ def update_content(bar_chart_clicks, box_chart_clicks, pie_chart_clicks, scatter
 
         ])
 
-   elif button_id == "new-content-link":
-        # Check if the clicked button is the "New Content" link
-        return html.Div([
-            html.H2('New Content', style={'text-align': 'center', 'color': 'black'}),
-            # Heading for new content
-            html.P("kakakakakakakkaak", style={'text-align': 'center', 'font-weight': 'bold', 'font-size': '20px'}),
-            # New content
-        ])
-
+ 
 
     else:
 
@@ -228,6 +216,10 @@ def update_content(bar_chart_clicks, box_chart_clicks, pie_chart_clicks, scatter
             dcc.Graph(id='plot-bar'),
 
         ])
+ 
+
+ 
+
 # Callback to update the bar chart based on the slider value
 
 @app.callback(Output('plot-bar', 'figure'), [Input('slider', 'value')])
@@ -268,7 +260,7 @@ def update_scatter_plot(genre_selection):
 
     return fig
 
+ 
 
-
-if __name__ == '_main_':
+if __name__ == 'main':
     app.run_server(debug=True)
