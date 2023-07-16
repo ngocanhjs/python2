@@ -60,7 +60,7 @@ fig_pie = px.pie(
     color_discrete_sequence=['goldenrod', 'hotpink', 'chocolate', 'lawngreen', 'dodgerblue']
 )
 fig_pie.update_traces(textposition='inside', textinfo='percent+label', marker=dict(line=dict(color='white', width=1)))
-fig_pie.update_layout(height=600)
+fig_pie.update_layout(height=500)
 
 # Create the scatter plot
 fig_scatter = px.scatter(
@@ -80,9 +80,9 @@ app.layout = dbc.Container([
     dbc.Row([
         dbc.Col([
             html.H1('NETFLIX TV SHOW DATA VISUALIZATION', style={'text-align': 'center'}),
-            html.H6("This interactive web application includes a bar chart visualizing the top 5 countries with the highest Netflix TV show production, as well as a box chart displaying the distribution of scores within different genres. Users can interact with the slider and dropdown menu to explore the data.",
+            html.H6("This interactive web application features a variety of visualizations to help users explore Netflix TV show production data (especially on main_genre and main_production)",
                 style={'text-align': 'center', 'color': 'lightblack', 'font-style': 'italic'}),
-            html.A('Click here for more information', href='https://www.netflix.com/',
+            html.A('Click here for more information', href='https://www.canva.com/design/DAFlTrarBAE/5PH1kWBRhPp9B3XbF5gjKw/view?utm_content=DAFlTrarBAE&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink',
                style={'text-align': 'center', 'color': 'blue','font-style': 'italic','font-size': '14px'}),
             html.Hr(),
             # Sidebar
@@ -152,9 +152,9 @@ def update_content(bar_chart_clicks, box_chart_clicks, pie_chart_clicks, scatter
 
             html.H2('The Distribution of Main Genre', style={'text-align': 'center', 'color': 'black'}),
 
-            html.H5('THE MAIN BOX CHART'),
+            html.H5('THE  BOX CHART'),
 
-            dcc.Graph(id='plot-box', figure=fig_box, style={'height': 750}),
+            dcc.Graph(id='plot-box', figure=fig_box, style={'height': 600}),
 
         ])
 
@@ -164,10 +164,11 @@ def update_content(bar_chart_clicks, box_chart_clicks, pie_chart_clicks, scatter
 
         return html.Div([
 
-            html.H2('The Distribution of Main Genre', style={'text-align': 'center', 'color': 'black'}),
+            html.H2('The Distribution of Main Production', style={'text-align': 'center', 'color': 'black'}),
 
             html.H5('THE PIE CHART'),
 
+             html.H6('The pie chart depicts the proportion of 12 countries production. Each country is represented by a slice of the pie, with its size proportional to the percentage it contributes to the total production.'),
             dcc.Graph(id='plot-pie', figure=fig_pie),
 
         ])
